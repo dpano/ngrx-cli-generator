@@ -62,11 +62,8 @@ const context = {
   featureKey: `${feature}FeatureKey`,
   reducerName: `${feature}Reducer`,
   properties: props.map(p => {
-    const [namePart, ...typeParts] = p.split(':');
-    return {
-      name: namePart.trim(),
-      type: typeParts.join(':').trim()
-    };
+    const [name, type] = p.split(':');
+    return { name, type };
   })
 };
 
@@ -112,20 +109,16 @@ if (await fs.pathExists(appConfigPath)) {
     configContent = importLine + '\n' + configContent;
   }
 
-  const providerBlockStart = configContent.indexOf("providers: [");
-  if (providerBlockStart !== -1 && !configContent.includes(`provideState(${context.featureKey}`)) {
-    const insertAfter = "provideStore(),";
-    const insertIndex = configContent.indexOf(insertAfter, providerBlockStart);
-    if (insertIndex !== -1) {
-      const before = configContent.slice(0, insertIndex + insertAfter.length);
-      const after = configContent.slice(insertIndex + insertAfter.length);
-      const newLine = `\n    provideState(${context.featureKey}, ${context.reducerName}),`;
-      configContent = before + newLine + after;
-      await fs.writeFile(appConfigPath, configContent, 'utf-8');
-      console.log('✅ app.config.ts patched successfully.');
-    } else {
-      console.log('⚠️ Could not find "provideStore()," to insert after.');
-    }
+  const providersMatch = configContent.match(/providers\s*:\s*\[((.|\n)*?)\]/);
+  if (providersMatch && !providersMatch[0].includes(`provideState(${context.featureKey}`)) {
+    const patchedProviders = providersMatch[0].replace(
+      /\[(.*?)\]/s,
+      (match, content) =>
+        `[${content.trim()},\n    provideState(${context.featureKey}, ${context.reducerName})]`
+    );
+    configContent = configContent.replace(providersMatch[0], patchedProviders);
+    await fs.writeFile(appConfigPath, configContent, 'utf-8');
+    console.log('✅ app.config.ts updated successfully.');
   } else {
     console.log('⚠️ Could not patch app.config.ts — either already patched or malformed.');
   }
