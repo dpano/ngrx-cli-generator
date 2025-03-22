@@ -1,0 +1,21 @@
+{
+  "name": "ngrx-cli-generator",
+  "version": "1.0.0",
+  "description": "CLI tool to generate NgRx files with support for entity adapter, tests, and config flags",
+  "type": "module",
+  "main": "generate-ngrx.mjs",
+  "scripts": {
+    "start": "node generate-ngrx.mjs"
+  },
+  "bin": {
+    "generate-ngrx": "./generate-ngrx.mjs"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "handlebars": "^4.7.8",
+    "inquirer": "^9.2.7",
+    "minimist": "^1.2.8"
+  }
+}

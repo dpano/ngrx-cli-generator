@@ -1,0 +1,33 @@
+import { createReducer, on } from '@ngrx/store';
+import * as {{feature}}Actions from './{{feature}}.actions';
+import { {{className}} } from './{{feature}}.model';
+
+export const {{featureKey}} = '{{feature}}';
+
+export interface State {
+  data: {{className}}[];
+  loading: boolean;
+  error: any;
+}
+
+export const initialState: State = {
+  data: [],
+  loading: false,
+  error: null
+};
+
+export const {{reducerName}} = createReducer(
+  initialState,
+  on({{feature}}Actions.load{{className}}, state => ({ ...state, loading: true })),
+  on({{feature}}Actions.load{{className}}Success, (state, { data }) => ({ ...state, loading: false, data })),
+  on({{feature}}Actions.load{{className}}Failure, (state, { error }) => ({ ...state, loading: false, error })),
+  on({{feature}}Actions.create{{className}}Success, (state, { item }) => ({ ...state, data: [...state.data, item] })),
+  on({{feature}}Actions.update{{className}}Success, (state, { item }) => ({
+    ...state,
+    data: state.data.map(i => i.id === item.id ? item : i)
+  })),
+  on({{feature}}Actions.delete{{className}}Success, (state, { id }) => ({
+    ...state,
+    data: state.data.filter(i => i.id !== id)
+  }))
+);

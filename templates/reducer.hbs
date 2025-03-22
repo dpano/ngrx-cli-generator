@@ -1,0 +1,37 @@
+import { createReducer, on } from '@ngrx/store';
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
+import * as {{feature}}Actions from './{{feature}}.actions';
+import { {{className}} } from './{{feature}}.model';
+
+export const {{featureKey}} = '{{feature}}';
+
+export interface State extends EntityState<{{className}}> {
+  loading: boolean;
+  error: any;
+}
+
+export const adapter = createEntityAdapter<{{className}}>();
+
+export const initialState: State = adapter.getInitialState({
+  loading: false,
+  error: null
+});
+
+export const {{reducerName}} = createReducer(
+  initialState,
+  on({{feature}}Actions.load{{className}}, state => ({ ...state, loading: true })),
+  on({{feature}}Actions.load{{className}}Success, (state, { data }) =>
+    adapter.setAll(data, { ...state, loading: false })
+  ),
+  on({{feature}}Actions.load{{className}}Failure, (state, { error }) => ({ ...state, loading: false, error })),
+
+  on({{feature}}Actions.create{{className}}Success, (state, { item }) =>
+    adapter.addOne(item, state)
+  ),
+  on({{feature}}Actions.update{{className}}Success, (state, { item }) =>
+    adapter.updateOne({ id: item.id, changes: item }, state)
+  ),
+  on({{feature}}Actions.delete{{className}}Success, (state, { id }) =>
+    adapter.removeOne(id, state)
+  )
+);

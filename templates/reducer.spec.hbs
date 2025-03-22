@@ -1,0 +1,12 @@
+import { {{reducerName}}, initialState } from './{{feature}}.reducer';
+import * as {{feature}}Actions from './{{feature}}.actions';
+
+describe('{{className}} Reducer', () => {
+  it('should handle load success', () => {
+    const data = [{ id: 1, name: 'Test' }];
+    const action = {{feature}}Actions.load{{className}}Success({ data });
+    const state = {{reducerName}}(initialState, action);
+    expect(state.data.length).toBe(1);
+    expect(state.loading).toBe(false);
+  });
+});

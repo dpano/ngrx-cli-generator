@@ -1,0 +1,13 @@
+import * as from{{className}} from './{{feature}}.actions';
+
+describe('{{className}} Actions', () => {
+  it('should create load action', () => {
+    const action = from{{className}}.load{{className}}();
+    expect(action.type).toBe('[{{className}}] Load');
+  });
+
+  it('should create create action', () => {
+    const action = from{{className}}.create{{className}}({ item: { id: 1 } as any });
+    expect(action.type).toBe('[{{className}}] Create');
+  });
+});

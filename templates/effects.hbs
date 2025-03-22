@@ -1,0 +1,58 @@
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import * as {{feature}}Actions from './{{feature}}.actions';
+import { of } from 'rxjs';
+import { catchError, map, mergeMap } from 'rxjs/operators';
+
+@Injectable()
+export class {{className}}Effects {
+  load$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType({{feature}}Actions.load{{className}}),
+      mergeMap(() =>
+        of([]).pipe(
+          map(data => {{feature}}Actions.load{{className}}Success({ data })),
+          catchError(error => of({{feature}}Actions.load{{className}}Failure({ error })))
+        )
+      )
+    )
+  );
+
+  create$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType({{feature}}Actions.create{{className}}),
+      mergeMap(action =>
+        of(action.item).pipe(
+          map(data => {{feature}}Actions.create{{className}}Success({ item: data })),
+          catchError(error => of({{feature}}Actions.create{{className}}Failure({ error })))
+        )
+      )
+    )
+  );
+
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType({{feature}}Actions.update{{className}}),
+      mergeMap(action =>
+        of(action.item).pipe(
+          map(data => {{feature}}Actions.update{{className}}Success({ item: data })),
+          catchError(error => of({{feature}}Actions.update{{className}}Failure({ error })))
+        )
+      )
+    )
+  );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType({{feature}}Actions.delete{{className}}),
+      mergeMap(action =>
+        of(action.id).pipe(
+          map(() => {{feature}}Actions.delete{{className}}Success({ id: action.id })),
+          catchError(error => of({{feature}}Actions.delete{{className}}Failure({ error })))
+        )
+      )
+    )
+  );
+
+  constructor(private actions$: Actions) {}
+}

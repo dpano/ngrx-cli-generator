@@ -1,0 +1,30 @@
+import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable, of } from 'rxjs';
+import { {{className}}Effects } from './{{feature}}.effects';
+import * as {{feature}}Actions from './{{feature}}.actions';
+
+describe('{{className}} Effects', () => {
+  let actions$: Observable<any>;
+  let effects: {{className}}Effects;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        {{className}}Effects,
+        provideMockActions(() => actions$)
+      ]
+    });
+
+    effects = TestBed.inject({{className}}Effects);
+  });
+
+  it('should dispatch success action on load', (done) => {
+    actions$ = of({{feature}}Actions.load{{className}}());
+
+    effects.load$.subscribe(action => {
+      expect(action.type).toBe('[{{className}}] Load Success');
+      done();
+    });
+  });
+});

@@ -1,0 +1,19 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { State, {{featureKey}} } from './{{feature}}.reducer';
+
+export const select{{className}}State = createFeatureSelector<State>({{featureKey}});
+
+export const selectAll{{className}} = createSelector(
+  select{{className}}State,
+  (state) => state.data
+);
+
+export const select{{className}}Loading = createSelector(
+  select{{className}}State,
+  (state) => state.loading
+);
+
+export const select{{className}}Error = createSelector(
+  select{{className}}State,
+  (state) => state.error
+);
