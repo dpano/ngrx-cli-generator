@@ -62,8 +62,14 @@ const context = {
   featureKey: `${feature}FeatureKey`,
   reducerName: `${feature}Reducer`,
   properties: props.map(p => {
-    const [name, type] = p.split(':');
-    return { name, type };
+    const [namePart, ...typeParts] = p.split(':');
+    const name = namePart.trim();
+    const type = typeParts.join(':').trim();
+    const isOptional = name.endsWith('?');
+    return {
+      name: isOptional ? name.slice(0, -1) + '?' : name,
+      type
+    };
   })
 };
 
@@ -126,7 +132,6 @@ if (await fs.pathExists(appConfigPath)) {
   } else {
     console.log('⚠️ Could not patch app.config.ts — either already patched or malformed.');
   }
-  
 } else {
   console.log('⚠️ app.config.ts not found at src/app/app.config.ts');
 }
