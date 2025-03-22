@@ -82,17 +82,17 @@ generate-ngrx --importConfig products.config.json
 
 ## 🔧 Available Flags
 
-| Flag             | Description                                             |
-| ---------------- | ------------------------------------------------------- |
-| `--feature`      | Feature name (e.g. `products`)                          |
-| `--folder`       | Target output path (e.g. `src/app/store`)               |
-| `--properties`   | Comma-separated state props (`"id:number,name:string"`) |
-| `--useEntity`    | Use Entity Adapter in reducer                           |
-| `--withTests`    | Generate test files                                     |
-| `--effects`      | Include effects (default: true)                         |
-| `--selectors`    | Include selectors (default: true)                       |
-| `--exportConfig` | Save inputs to JSON                                     |
-| `--importConfig` | Load config from JSON                                   |
+| Flag                  | Description                                     |
+|-----------------------|-------------------------------------------------|
+| `--feature`           | Feature name (e.g. `products`)                  |
+| `--folder`            | Target output path (e.g. `src/app/store`)       |
+| `--properties`        | Comma-separated state props (`"id:number,name:string"`) |
+| `--useEntity`         | Use Entity Adapter in reducer                   |
+| `--withTests`         | Generate test files                             |
+| `--effects`           | Include effects (default: true)                 |
+| `--selectors`         | Include selectors (default: true)               |
+| `--exportConfig`      | Save inputs to JSON                             |
+| `--importConfig`      | Load config from JSON                           |
 
 ---
 
@@ -131,7 +131,7 @@ src/app/store/products/
 
 ## 👨‍💻 Author
 
-Built with ❤️ by Dimi
+Built with ❤️ by [Your Name]
 
 ---
 

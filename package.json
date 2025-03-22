@@ -10,7 +10,7 @@
   "bin": {
     "generate-ngrx": "./generate-ngrx.mjs"
   },
-  "author": "Your Name",
+  "author": "Dimi",
   "license": "MIT",
   "dependencies": {
     "fs-extra": "^11.1.1",

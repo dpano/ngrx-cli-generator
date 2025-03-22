@@ -18,41 +18,33 @@ export class {{className}}Effects {
     )
   );
 
-  create$ = createEffect(() =>
+  {{#if withPagination}}
+  loadPaged$ = createEffect(() =>
     this.actions$.pipe(
-      ofType({{feature}}Actions.create{{className}}),
+      ofType({{feature}}Actions.loadPaged{{className}}),
       mergeMap(action =>
-        of(action.item).pipe(
-          map(data => {{feature}}Actions.create{{className}}Success({ item: data })),
-          catchError(error => of({{feature}}Actions.create{{className}}Failure({ error })))
+        of({ data: [], total: 0 }).pipe(
+          map(({ data, total }) => {{feature}}Actions.loadPaged{{className}}Success({ data, total })),
+          catchError(error => of({{feature}}Actions.loadPaged{{className}}Failure({ error })))
         )
       )
     )
   );
+  {{/if}}
 
-  update$ = createEffect(() =>
+  {{#if withLoadOne}}
+  loadOne$ = createEffect(() =>
     this.actions$.pipe(
-      ofType({{feature}}Actions.update{{className}}),
+      ofType({{feature}}Actions.load{{className}}ById),
       mergeMap(action =>
-        of(action.item).pipe(
-          map(data => {{feature}}Actions.update{{className}}Success({ item: data })),
-          catchError(error => of({{feature}}Actions.update{{className}}Failure({ error })))
+        of({ id: action.id, name: 'One' }).pipe(
+          map(item => {{feature}}Actions.load{{className}}ByIdSuccess({ item })),
+          catchError(error => of({{feature}}Actions.load{{className}}ByIdFailure({ error })))
         )
       )
     )
   );
-
-  delete$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType({{feature}}Actions.delete{{className}}),
-      mergeMap(action =>
-        of(action.id).pipe(
-          map(() => {{feature}}Actions.delete{{className}}Success({ id: action.id })),
-          catchError(error => of({{feature}}Actions.delete{{className}}Failure({ error })))
-        )
-      )
-    )
-  );
+  {{/if}}
 
   constructor(private actions$: Actions) {}
 }

@@ -29,3 +29,20 @@ export const select{{className}}Error = createSelector(
   select{{className}}State,
   (state) => state.error
 );
+
+{{#if withPagination}}
+export const select{{className}}Page = createSelector(
+  select{{className}}State,
+  (state) => state.page
+);
+
+export const select{{className}}PageSize = createSelector(
+  select{{className}}State,
+  (state) => state.size
+);
+
+export const select{{className}}Total = createSelector(
+  select{{className}}State,
+  (state) => state.total
+);
+{{/if}}

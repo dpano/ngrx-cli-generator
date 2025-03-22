@@ -8,12 +8,22 @@ export interface State {
   data: {{className}}[];
   loading: boolean;
   error: any;
+  {{#if withPagination}}
+  page: number;
+  size: number;
+  total: number;
+  {{/if}}
 }
 
 export const initialState: State = {
   data: [],
   loading: false,
-  error: null
+  error: null,
+  {{#if withPagination}}
+  page: 1,
+  size: 10,
+  total: 0
+  {{/if}}
 };
 
 export const {{reducerName}} = createReducer(
@@ -21,6 +31,7 @@ export const {{reducerName}} = createReducer(
   on({{feature}}Actions.load{{className}}, state => ({ ...state, loading: true })),
   on({{feature}}Actions.load{{className}}Success, (state, { data }) => ({ ...state, loading: false, data })),
   on({{feature}}Actions.load{{className}}Failure, (state, { error }) => ({ ...state, loading: false, error })),
+
   on({{feature}}Actions.create{{className}}Success, (state, { item }) => ({ ...state, data: [...state.data, item] })),
   on({{feature}}Actions.update{{className}}Success, (state, { item }) => ({
     ...state,
@@ -29,5 +40,23 @@ export const {{reducerName}} = createReducer(
   on({{feature}}Actions.delete{{className}}Success, (state, { id }) => ({
     ...state,
     data: state.data.filter(i => i.id !== id)
-  }))
+  })),
+
+  {{#if withPagination}}
+  on({{feature}}Actions.loadPaged{{className}}, (state, { page, size }) => ({ ...state, loading: true, page, size })),
+  on({{feature}}Actions.loadPaged{{className}}Success, (state, { data, total }) => ({ ...state, loading: false, data, total })),
+  on({{feature}}Actions.loadPaged{{className}}Failure, (state, { error }) => ({ ...state, loading: false, error })),
+  {{/if}}
+
+  {{#if withLoadOne}}
+  on({{feature}}Actions.load{{className}}ByIdSuccess, (state, { item }) => {
+    const exists = state.data.find(i => i.id === item.id);
+    return {
+      ...state,
+      data: exists
+        ? state.data.map(i => i.id === item.id ? item : i)
+        : [...state.data, item]
+    };
+  }),
+  {{/if}}
 );

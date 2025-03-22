@@ -16,3 +16,15 @@ export const update{{className}}Failure = createAction('[{{className}}] Update F
 export const delete{{className}} = createAction('[{{className}}] Delete', props<{ id: number }>());
 export const delete{{className}}Success = createAction('[{{className}}] Delete Success', props<{ id: number }>());
 export const delete{{className}}Failure = createAction('[{{className}}] Delete Failure', props<{ error: any }>());
+
+{{#if withPagination}}
+export const loadPaged{{className}} = createAction('[{{className}}] Load Paged', props<{ page: number; size: number }>());
+export const loadPaged{{className}}Success = createAction('[{{className}}] Load Paged Success', props<{ data: {{className}}[]; total: number }>());
+export const loadPaged{{className}}Failure = createAction('[{{className}}] Load Paged Failure', props<{ error: any }>());
+{{/if}}
+
+{{#if withLoadOne}}
+export const load{{className}}ById = createAction('[{{className}}] Load One', props<{ id: number }>());
+export const load{{className}}ByIdSuccess = createAction('[{{className}}] Load One Success', props<{ item: {{className}} }>());
+export const load{{className}}ByIdFailure = createAction('[{{className}}] Load One Failure', props<{ error: any }>());
+{{/if}}
