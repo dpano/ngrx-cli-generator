@@ -1,50 +1,49 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as {{feature}}Actions from './{{feature}}.actions';
+import { inject } from '@angular/core';
+import { Actions } from '@ngrx/effects';
+import { createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
+import * as {{feature}}Actions from './{{feature}}.actions';
 
-@Injectable()
-export class {{className}}Effects {
-  load$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType({{feature}}Actions.load{{className}}),
-      mergeMap(() =>
-        of([]).pipe(
-          map(data => {{feature}}Actions.load{{className}}Success({ data })),
-          catchError(error => of({{feature}}Actions.load{{className}}Failure({ error })))
-        )
+export const load{{className}}Effect = createEffect(() => {
+  const actions$ = inject(Actions);
+  return actions$.pipe(
+    ofType({{feature}}Actions.load{{className}}),
+    mergeMap(() =>
+      of([]).pipe(
+        map(data => {{feature}}Actions.load{{className}}Success({ data })),
+        catchError(error => of({{feature}}Actions.load{{className}}Failure({ error })))
       )
     )
   );
+}, { functional: true });
 
-  {{#if withPagination}}
-  loadPaged$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType({{feature}}Actions.loadPaged{{className}}),
-      mergeMap(action =>
-        of({ data: [], total: 0 }).pipe(
-          map(({ data, total }) => {{feature}}Actions.loadPaged{{className}}Success({ data, total })),
-          catchError(error => of({{feature}}Actions.loadPaged{{className}}Failure({ error })))
-        )
+{{#if withPagination}}
+export const loadPaged{{className}}Effect = createEffect(() => {
+  const actions$ = inject(Actions);
+  return actions$.pipe(
+    ofType({{feature}}Actions.loadPaged{{className}}),
+    mergeMap(action =>
+      of({ data: [], total: 0 }).pipe(
+        map(({ data, total }) => {{feature}}Actions.loadPaged{{className}}Success({ data, total })),
+        catchError(error => of({{feature}}Actions.loadPaged{{className}}Failure({ error })))
       )
     )
   );
-  {{/if}}
+}, { functional: true });
+{{/if}}
 
-  {{#if withLoadOne}}
-  loadOne$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType({{feature}}Actions.load{{className}}ById),
-      mergeMap(action =>
-        of({ id: action.id, name: 'One' }).pipe(
-          map(item => {{feature}}Actions.load{{className}}ByIdSuccess({ item })),
-          catchError(error => of({{feature}}Actions.load{{className}}ByIdFailure({ error })))
-        )
+{{#if withLoadOne}}
+export const loadOne{{className}}Effect = createEffect(() => {
+  const actions$ = inject(Actions);
+  return actions$.pipe(
+    ofType({{feature}}Actions.load{{className}}ById),
+    mergeMap(action =>
+      of({ id: action.id, name: 'One' }).pipe(
+        map(item => {{feature}}Actions.load{{className}}ByIdSuccess({ item })),
+        catchError(error => of({{feature}}Actions.load{{className}}ByIdFailure({ error })))
       )
     )
   );
-  {{/if}}
-
-  constructor(private actions$: Actions) {}
-}
+}, { functional: true });
+{{/if}}

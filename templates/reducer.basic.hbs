@@ -1,8 +1,6 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import * as {{feature}}Actions from './{{feature}}.actions';
 import { {{className}} } from './{{feature}}.model';
-
-export const {{featureKey}} = '{{feature}}';
 
 export interface State {
   data: {{className}}[];
@@ -15,7 +13,7 @@ export interface State {
   {{/if}}
 }
 
-export const initialState: State = {
+const initialState: State = {
   data: [],
   loading: false,
   error: null,
@@ -26,7 +24,7 @@ export const initialState: State = {
   {{/if}}
 };
 
-export const {{reducerName}} = createReducer(
+const reducer = createReducer(
   initialState,
   on({{feature}}Actions.load{{className}}, state => ({ ...state, loading: true })),
   on({{feature}}Actions.load{{className}}Success, (state, { data }) => ({ ...state, loading: false, data })),
@@ -60,3 +58,14 @@ export const {{reducerName}} = createReducer(
   }),
   {{/if}}
 );
+
+export const {{feature}}Feature = createFeature({
+  name: '{{feature}}',
+  reducer,
+});
+
+export const {
+  name: {{feature}}FeatureKey,
+  reducer: {{reducerName}},
+  select{{className}}State{{#if useEntity}}{{/if}}
+} = {{feature}}Feature;

@@ -1,23 +1,13 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { State, {{featureKey}}, adapter } from './{{feature}}.reducer';
+import { createSelector } from '@ngrx/store';
+import { {{feature}}Feature } from './{{feature}}.reducer';
 
-export const select{{className}}State = createFeatureSelector<State>({{featureKey}});
-
-const {
-  selectAll,
-  selectEntities,
-  selectIds,
-  selectTotal
-} = adapter.getSelectors();
+export const {
+  select{{className}}State
+} = {{feature}}Feature;
 
 export const selectAll{{className}} = createSelector(
   select{{className}}State,
-  selectAll
-);
-
-export const select{{className}}Entities = createSelector(
-  select{{className}}State,
-  selectEntities
+  (state) => state.data
 );
 
 export const select{{className}}Loading = createSelector(
@@ -41,7 +31,7 @@ export const select{{className}}PageSize = createSelector(
   (state) => state.size
 );
 
-export const select{{className}}Total = createSelector(
+export const select{{className}}TotalItems = createSelector(
   select{{className}}State,
   (state) => state.total
 );
