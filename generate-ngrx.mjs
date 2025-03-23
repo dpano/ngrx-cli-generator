@@ -55,7 +55,6 @@ if (config) {
     properties: args.properties || '',
     effects: args.effects !== false,
     selectors: args.selectors !== false,
-    useEntity: args.useEntity !== false,
     generateTests: args.withTests !== false
   };
 
@@ -65,7 +64,6 @@ if (config) {
   if (!answers.properties) prompts.push({ type: 'input', name: 'properties', message: 'State properties (e.g., id:number,name:string):' });
   if (!args.effects) prompts.push({ type: 'confirm', name: 'effects', message: 'Generate effects?', default: true });
   if (!args.selectors) prompts.push({ type: 'confirm', name: 'selectors', message: 'Generate selectors?', default: true });
-  if (!args.useEntity) prompts.push({ type: 'confirm', name: 'useEntity', message: 'Use Entity Adapter for reducer?', default: true });
   if (!args.withTests) prompts.push({ type: 'confirm', name: 'generateTests', message: 'Generate unit test files?', default: true });
   if (!args.withPagination) prompts.push({ type: 'confirm', name: 'withPagination', message: 'Include pagination support?', default: false });
   if (!args.withLoadOne) prompts.push({ type: 'confirm', name: 'withLoadOne', message: 'Include single-entity load?', default: false });
@@ -164,7 +162,7 @@ if (await fs.pathExists(appConfigPath)) {
     const insertAfter = "provideStore(),";
       let newLine = '';
       if (answers.effects && !configContent.includes(`provideEffects(${feature}Effects`)) {
-        newLine += `\n    provideEffects(${feature.toLowerCase()}Effects),`;
+        newLine += `\n    provideEffects(${feature}Effects),`;
       }
 
     const insertIndex = configContent.indexOf(insertAfter, providerBlockStart);
@@ -172,8 +170,8 @@ if (await fs.pathExists(appConfigPath)) {
       let before = configContent.slice(0, insertIndex + insertAfter.length);
       let after = configContent.slice(insertIndex + insertAfter.length);
       let newLine = `\n    provideState(${context.featureKey}, ${context.reducerName}),`;
-      if (answers.effects && !configContent.includes(`provideEffects(${effectClassName}`)) {
-        newLine += `\n    provideEffects(${effectClassName}),`;
+      if (answers.effects && !configContent.includes(`provideEffects(${feature}Effects)`)) {
+        newLine += `\n    provideEffects(${feature}Effects),`;
       }
       configContent = before + newLine + after;
       await fs.writeFile(appConfigPath, configContent, 'utf-8');

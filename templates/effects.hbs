@@ -18,6 +18,45 @@ export const load{{className}}Effect = createEffect(() => {
   );
 }, { functional: true });
 
+export const create{{className}}Effect = createEffect(() => {
+  const actions$ = inject(Actions);
+  return actions$.pipe(
+    ofType({{feature}}Actions.create{{className}}),
+    mergeMap(({ item }) =>
+      of(item).pipe(
+        map(created => {{feature}}Actions.create{{className}}Success({ item: created })),
+        catchError(error => of({{feature}}Actions.create{{className}}Failure({ error })))
+      )
+    )
+  );
+}, { functional: true });
+
+export const update{{className}}Effect = createEffect(() => {
+  const actions$ = inject(Actions);
+  return actions$.pipe(
+    ofType({{feature}}Actions.update{{className}}),
+    mergeMap(({ item }) =>
+      of(item).pipe(
+        map(updated => {{feature}}Actions.update{{className}}Success({ item: updated })),
+        catchError(error => of({{feature}}Actions.update{{className}}Failure({ error })))
+      )
+    )
+  );
+}, { functional: true });
+
+export const delete{{className}}Effect = createEffect(() => {
+  const actions$ = inject(Actions);
+  return actions$.pipe(
+    ofType({{feature}}Actions.delete{{className}}),
+    mergeMap(({ id }) =>
+      of(id).pipe(
+        map(() => {{feature}}Actions.delete{{className}}Success({ id })),
+        catchError(error => of({{feature}}Actions.delete{{className}}Failure({ error })))
+      )
+    )
+  );
+}, { functional: true });
+
 {{#if withPagination}}
 export const loadPaged{{className}}Effect = createEffect(() => {
   const actions$ = inject(Actions);
