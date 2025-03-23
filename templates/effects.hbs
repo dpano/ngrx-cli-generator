@@ -17,7 +17,7 @@ export const load{{className}}Effect = createEffect(() => {
     )
   );
 }, { functional: true });
-
+{{#if withCud}}
 export const create{{className}}Effect = createEffect(() => {
   const actions$ = inject(Actions);
   return actions$.pipe(
@@ -56,6 +56,7 @@ export const delete{{className}}Effect = createEffect(() => {
     )
   );
 }, { functional: true });
+{{/if}}
 
 {{#if withPagination}}
 export const loadPaged{{className}}Effect = createEffect(() => {

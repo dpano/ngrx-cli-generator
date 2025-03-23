@@ -67,6 +67,7 @@ if (config) {
   if (!args.withTests) prompts.push({ type: 'confirm', name: 'generateTests', message: 'Generate unit test files?', default: true });
   if (!args.withPagination) prompts.push({ type: 'confirm', name: 'withPagination', message: 'Include pagination support?', default: false });
   if (!args.withLoadOne) prompts.push({ type: 'confirm', name: 'withLoadOne', message: 'Include single-entity load?', default: false });
+  if (!args.withCud) prompts.push({ type: 'confirm', name: 'withCud', message: 'Include Create, Update and Delete Effects?', default: false });
 
   const promptAnswers = await inquirer.prompt(prompts);
   answers = { ...answers, ...promptAnswers };
@@ -96,7 +97,8 @@ const context = {
     };
   }),
   withPagination: answers.withPagination,
-  withLoadOne: answers.withLoadOne
+  withLoadOne: answers.withLoadOne,
+  withCud: answers.withCud
 };
 
 const reducerTemplateName = answers.useEntity ? 'reducer' : 'reducer.basic';
