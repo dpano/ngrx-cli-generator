@@ -2,7 +2,6 @@
 
 A powerful CLI tool to generate NgRx feature files automatically for Angular applications — with support for:
 
-✅ Entity Adapter  
 ✅ Full CRUD Actions & Effects  
 ✅ Selectors  
 ✅ Unit Test Files  
@@ -36,14 +35,13 @@ generate-ngrx
 
 ## 🧪 Example Usage
 
-Generate a new `products` feature with Entity Adapter and unit tests:
+Generate a new `products` feature and unit tests:
 
 ```bash
 generate-ngrx \
   --feature products \
   --folder src/app/store \
   --properties "id:number,name:string" \
-  --useEntity \
   --withTests \
   --exportConfig
 ```
@@ -55,7 +53,7 @@ generate-ngrx \
 ## 🛠 Features
 
 - 🔁 CRUD actions (`load`, `create`, `update`, `delete`)
-- 🧱 Entity Adapter or plain array state
+- 🧱 plain array state
 - 🧪 Generates `.spec.ts` files for actions, reducer, effects
 - 🧠 Selector support via `adapter.getSelectors()` when using EntityState
 - ⚙️ Automatically updates `app.config.ts` with `provideState(...)`
@@ -82,17 +80,16 @@ generate-ngrx --importConfig products.config.json
 
 ## 🔧 Available Flags
 
-| Flag                  | Description                                     |
-|-----------------------|-------------------------------------------------|
-| `--feature`           | Feature name (e.g. `products`)                  |
-| `--folder`            | Target output path (e.g. `src/app/store`)       |
-| `--properties`        | Comma-separated state props (`"id:number,name:string"`) |
-| `--useEntity`         | Use Entity Adapter in reducer                   |
-| `--withTests`         | Generate test files                             |
-| `--effects`           | Include effects (default: true)                 |
-| `--selectors`         | Include selectors (default: true)               |
-| `--exportConfig`      | Save inputs to JSON                             |
-| `--importConfig`      | Load config from JSON                           |
+| Flag             | Description                                             |
+| ---------------- | ------------------------------------------------------- |
+| `--feature`      | Feature name (e.g. `products`)                          |
+| `--folder`       | Target output path (e.g. `src/app/store`)               |
+| `--properties`   | Comma-separated state props (`"id:number,name:string"`) |
+| `--withTests`    | Generate test files                                     |
+| `--effects`      | Include effects (default: true)                         |
+| `--selectors`    | Include selectors (default: true)                       |
+| `--exportConfig` | Save inputs to JSON                                     |
+| `--importConfig` | Load config from JSON                                   |
 
 ---
 
@@ -123,15 +120,14 @@ src/app/store/products/
 ## 💡 Coming Soon
 
 - [ ] Support for `createFeature()` (NgRx v16+)
-- [ ] NgRx Data integration
-- [ ] Angular schematic version
+- [ ] Support for Entity Adapter
 - [ ] Web-based UI generator
 
 ---
 
 ## 👨‍💻 Author
 
-Built with ❤️ by [Your Name]
+Built by Dimi
 
 ---
 
