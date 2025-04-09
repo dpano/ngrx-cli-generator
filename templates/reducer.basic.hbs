@@ -29,7 +29,7 @@ const reducer = createReducer(
   on({{feature}}Actions.load{{className}}, state => ({ ...state, loading: true })),
   on({{feature}}Actions.load{{className}}Success, (state, { data }) => ({ ...state, loading: false, data })),
   on({{feature}}Actions.load{{className}}Failure, (state, { error }) => ({ ...state, loading: false, error })),
-
+{{#if withCud}}
   on({{feature}}Actions.create{{className}}Success, (state, { item }) => ({ ...state, data: [...state.data, item] })),
   on({{feature}}Actions.update{{className}}Success, (state, { item }) => ({
     ...state,
@@ -39,7 +39,7 @@ const reducer = createReducer(
     ...state,
     data: state.data.filter(i => i.id !== id)
   })),
-
+{{/if}}
   {{#if withPagination}}
   on({{feature}}Actions.loadPaged{{className}}, (state, { page, size }) => ({ ...state, loading: true, page, size })),
   on({{feature}}Actions.loadPaged{{className}}Success, (state, { data, total }) => ({ ...state, loading: false, data, total })),
